@@ -3,6 +3,7 @@ import random
 import time
 
 import minescript
+import lib.movement as move
 from minescript_plus import Gui
 
 from constants import SUSPICION_USERNAME
@@ -60,7 +61,7 @@ class ChatMonitorService(BaseService):
         time.sleep(reading_time)
         typing_time = len(response) / random.uniform(4.0, 6.0)
         minescript.player_press_forward(False)
-        minescript.player_press_attack(False)
+        move.stop_attack()
         time.sleep(typing_time)
         minescript.execute(response)
         minescript.echo(f"§e[ChatMonitor] Responded to mention with: '{response}'")

@@ -3,6 +3,7 @@ import os
 import time
 
 import minescript
+import lib.movement as move
 
 from lib.services.base_service import BaseService
 
@@ -58,8 +59,8 @@ class TeleportFailsafeService(BaseService):
 
     def trigger_failsafe(self, reason):
         self.stop()
-        minescript.player_press_attack(False)
-        minescript.player_press_use(False)
+        move.stop_attack()
+        move.stop_use()
         minescript.player_press_forward(False)
         minescript.player_press_backward(False)
         minescript.player_press_left(False)

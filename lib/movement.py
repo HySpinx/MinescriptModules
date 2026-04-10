@@ -46,8 +46,8 @@ def stop_all_movement(): # Stop moving and clicking
         if is_active:
             _MOVEMENT_KEY_RELEASE[direction_key](False)
             moving[direction_key] = False
-    minescript.player_press_attack(False)
-    minescript.player_press_use(False)
+    stop_attack()
+    stop_use()
 
 def stop_directional_movement(): # Stop moving along the x,y,z
     for direction_key, is_active in moving.items():
@@ -96,6 +96,18 @@ def start_sprint():
 
 def stop_sprint():
     minescript.player_press_sprint(False)
+
+def start_attack():
+    minescript.player_press_attack(True)
+
+def stop_attack():
+    minescript.player_press_attack(False)
+
+def start_use():
+    minescript.player_press_use(True)
+
+def stop_use():
+    minescript.player_press_use(False)
 
 # ==========================================
 # 3. ADVANCED MOVEMENT FUNCTIONS

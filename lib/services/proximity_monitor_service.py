@@ -2,6 +2,7 @@ import random
 import time
 
 import minescript
+import lib.movement as move
 
 from lib.services.base_service import BaseService
 from core.state import bot_active, run_event
@@ -46,8 +47,8 @@ class ProximityMonitorService(BaseService):
         minescript.echo(f"§c[ProximityMonitor] Player '{player_name}' is loitering! Evading...")
         self.pause_event.set()
         self.stop()
-        minescript.player_press_attack(False)
-        minescript.player_press_use(False)
+        move.stop_attack()
+        move.stop_use()
         minescript.player_press_forward(False)
         time.sleep(random.uniform(0.5, 1.2))
         minescript.execute("so laggy brb")
