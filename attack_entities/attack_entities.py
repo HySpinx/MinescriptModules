@@ -1,22 +1,16 @@
 import minescript
-import lib
 import lib.orientation as orient
 import random
-import time
 import math
 import lib.humanization as human
+import lib.movement as move
 
 # Import your existing global states and pause handler
 from core.state import bot_active, check_pause
-from core.constants import TIME_MIN_CLICK_DELAY, TIME_MAX_CLICK_DELAY, TIME_MIN_SWING_COOLDOWN, TIME_MAX_SWING_COOLDOWN
 
 # ==========================================
 # CONFIGURATION
 # ==========================================
-CLICK_HOLD_MIN = TIME_MIN_CLICK_DELAY
-CLICK_HOLD_MAX = TIME_MAX_CLICK_DELAY
-SWING_COOLDOWN_MIN = TIME_MIN_SWING_COOLDOWN
-SWING_COOLDOWN_MAX = TIME_MAX_SWING_COOLDOWN
 
 # ==========================================
 # COMBAT LOGIC
@@ -42,17 +36,17 @@ def attack_entity():
             if math.dist(entity_pos, player_pos) < 4.0:
                 # "Bad attack" / Intentional missed swing logic (10% chance)
                 if random.random() < 0.1: # 10% chance to miss
-                    minescript.player_press_attack(True)
-                    human.human_delay(CLICK_HOLD_MIN, CLICK_HOLD_MAX)
-                    minescript.player_press_attack(False)
-                    human.human_delay(SWING_COOLDOWN_MIN, SWING_COOLDOWN_MAX)
+                    move.start_attack()
+                    human.do_click_delay()
+                    move.stop_attack()
+                    human.do_click_cooldown()
                     continue
     if target:
-        minescript.player_press_attack(True)
-        human.human_delay(CLICK_HOLD_MIN, CLICK_HOLD_MAX)
-        minescript.player_press_attack(False)
+        move.start_attack()
+        human.do_click_delay()
+        move.stop_attack()
         
-        human.human_delay(SWING_COOLDOWN_MIN, SWING_COOLDOWN_MAX)
+        human.do_click_cooldown()
         return True
     return False
 
